@@ -60,7 +60,7 @@ class IntModel:
         group_cap = int(t_cap * 0.7)
         affected_groups = { k: v for k, v in self.groups.items() if len(v) > group_cap }
         for g, g_members in affected_groups.items():
-            g_member_ints = self.get_persons_int(g_members)
+            g_member_ints = map(self.__get_person_int, g_members)
             g_members_on_t = Plus(map(lambda g: Ite(Equals(g, Int(t)), Int(1), Int(0)), g_member_ints))
             cons = g_members_on_t <= group_cap
             constraints.append(cons)
