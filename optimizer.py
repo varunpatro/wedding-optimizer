@@ -1,9 +1,16 @@
 from collections import defaultdict
 from pysmt.shortcuts import *
 
+# To capture unsatisfiable problem constraints
+# TODO: in the future, should be able to show
+# the unsatisfiable core, or contradictory
+# constraints.
 class UnsatValueError(Exception):
     pass
 
+# IntModel uses Linear Integer Arithmetic theory
+# to model the program. Yices2 is great at solving
+# LIA problems.
 class IntModel:
     def __init__(self, data):
         self.persons = data["persons"]
@@ -87,7 +94,7 @@ class IntModel:
         assignment = [solution.get_py_value(self.__get_person_int(x)) for x in self.person_ids]
         return assignment
 
-
+# Requires the `yices` solver. Preferably `yices2`.
 class WeddingOptimizer:
     data = {}
     config = {
